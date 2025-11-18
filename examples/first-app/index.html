@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最初のアプリ - Dockerで動かす</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .info-box h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .info-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        .info-item strong {
+            display: inline-block;
+            min-width: 150px;
+        }
+        
+        .flow {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .flow-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .arrow {
+            text-align: center;
+            font-size: 2em;
+            margin: 10px 0;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Hello World!</h1>
+        <p class="subtitle">これは私が作った最初のアプリです</p>
+        
+        <div class="info-box">
+            <h2>📦 このアプリの構成</h2>
+            <div class="info-item">
+                <strong>アプリケーション:</strong> index.html（このHTMLファイル）
+            </div>
+            <div class="info-item">
+                <strong>Webサーバー:</strong> nginx（コンテナ内で動いている）
+            </div>
+            <div class="info-item">
+                <strong>OS:</strong> Linux（コンテナ内）
+            </div>
+            <div class="info-item">
+                <strong>環境:</strong> Dockerコンテナ
+            </div>
+        </div>
+        
+        <div class="flow">
+            <h2>🔄 アプリが動く仕組み</h2>
+            <div class="flow-item">1. ブラウザがリクエストを送信</div>
+            <div class="arrow">↓</div>
+            <div class="flow-item">2. Webサーバー（nginx）がリクエストを受け取る</div>
+            <div class="arrow">↓</div>
+            <div class="flow-item">3. HTMLファイル（index.html）を読み込む</div>
+            <div class="arrow">↓</div>
+            <div class="flow-item">4. ブラウザにHTMLファイルを送信</div>
+            <div class="arrow">↓</div>
+            <div class="flow-item">5. ブラウザがHTMLを表示（このページ）</div>
+        </div>
+        
+        <div class="info-box">
+            <h2>💡 学習ポイント</h2>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+                <li>このHTMLファイルが<strong>アプリケーション</strong>です</li>
+                <li>Webサーバー（nginx）が<strong>ランタイム環境</strong>です</li>
+                <li>Linuxが<strong>OS</strong>です（コンテナ内）</li>
+                <li>これらが<strong>一緒にパッケージ化</strong>されています</li>
+                <li><strong>環境に依存しない：</strong>Mac、Windows、Linuxで同じように動きます</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h2>🔍 確認してみよう</h2>
+            
+            <h3 style="margin-top: 15px; margin-bottom: 10px; color: #ffd700;">実験1：コンテナが動いていることを確認</h3>
+            <div class="info-item">
+                <strong>ターミナルに入力:</strong>
+                <code style="background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 5px;">docker ps</code>
+            </div>
+            <p style="margin-left: 20px; margin-top: 5px; opacity: 0.9;">
+                → Pythonで<code>python app.py</code>と入力するように、ターミナルに<code>docker ps</code>と入力してEnterキーを押します。コンテナが動いていることが確認できます。これが「アプリが動いている」状態です。
+            </p>
+            <div style="margin-left: 20px; margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 5px;">
+                <p style="font-size: 0.9em; margin-bottom: 5px;"><strong>docker psの見方：</strong></p>
+                <ul style="font-size: 0.85em; line-height: 1.6; margin-left: 15px;">
+                    <li><strong>CONTAINER ID</strong>：コンテナの識別子</li>
+                    <li><strong>IMAGE</strong>：元のイメージ名</li>
+                    <li><strong>STATUS</strong>：状態（Up = 実行中）</li>
+                    <li><strong>PORTS</strong>：ポートマッピング（8082→80）</li>
+                    <li><strong>NAMES</strong>：コンテナの名前</li>
+                </ul>
+                <p style="font-size: 0.85em; margin-top: 5px; color: #4CAF50;">
+                    📚 詳しくは：[docker psの見方](../../10_docker_psの見方.md)を読んでください
+                </p>
+            </div>
+            
+            <h3 style="margin-top: 15px; margin-bottom: 10px; color: #ffd700;">実験2：コンテナ内のOSを確認</h3>
+            <div class="info-item">
+                <strong>ターミナルに入力:</strong>
+                <code style="background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 5px;">docker exec first-app-web cat /etc/os-release</code>
+            </div>
+            <p style="margin-left: 20px; margin-top: 5px; opacity: 0.9;">
+                → ターミナルにこの文字列を入力してEnterキーを押します。コンテナ内はLinuxです。あなたのPCはWindowsでも、コンテナ内はLinuxで動いています。
+            </p>
+            
+            <h3 style="margin-top: 15px; margin-bottom: 10px; color: #ffd700;">実験3：ファイルを編集してみる</h3>
+            <div class="info-item">
+                <strong>手順:</strong>
+                <code style="background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 5px;">index.html</code>を編集して、ブラウザをリロード（F5キー）
+            </div>
+            <p style="margin-left: 20px; margin-top: 5px; opacity: 0.9;">
+                → 変更が即座に反映されます。ファイルがホスト上にあり、コンテナにマウントされているからです。
+            </p>
+            
+            <h3 style="margin-top: 15px; margin-bottom: 10px; color: #ffd700;">実験4：コンテナを停止してみる</h3>
+            <div class="info-item">
+                <strong>ターミナルに入力:</strong>
+                <code style="background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 5px;">docker-compose stop</code>
+            </div>
+            <p style="margin-left: 20px; margin-top: 5px; opacity: 0.9;">
+                → ターミナルにこの文字列を入力してEnterキーを押します。ブラウザでアクセスできなくなります。コンテナが停止すると、アプリも停止します。
+            </p>
+            
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255, 193, 7, 0.2); border-radius: 5px; border-left: 4px solid #ffc107;">
+                <p style="font-weight: bold; margin-bottom: 10px;">💡 重要な気づき：</p>
+                <p style="line-height: 1.8;">
+                    これらの実験を通じて、「アプリが動く仕組み」と「Dockerが何をしているか」が<br>
+                    <strong>目に見える形で理解できる</strong>ようになります。
+                </p>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h2>❓ よくある質問</h2>
+            <div class="info-item">
+                <strong>Q: これは仮想サーバーですか？</strong>
+                <p style="margin-top: 5px; opacity: 0.9;">
+                    A: 正確には「コンテナ」です。コンテナ内はLinux環境として動作し、独立したサーバーのように見えますが、仮想マシンより軽量で高速です。
+                    <a href="IS_THIS_VIRTUAL_SERVER.md" style="color: #4CAF50; text-decoration: underline;">詳しくはこちら</a>
+                </p>
+            </div>
+            <div class="info-item">
+                <strong>Q: イメージはどこにあるの？コンテナになるの？</strong>
+                <p style="margin-top: 5px; opacity: 0.9;">
+                    A: イメージはDockerの内部ストレージに保存されます。イメージからコンテナが作成され、コンテナが起動します。ターミナルに入力する文字列（Pythonで<code>python app.py</code>と入力するように）で確認できます。
+                    <a href="WHERE_ARE_IMAGES.md" style="color: #4CAF50; text-decoration: underline;">詳しくはこちら</a>
+                </p>
+            </div>
+            <div class="info-item">
+                <strong>Q: 「コマンド」って何？</strong>
+                <p style="margin-top: 5px; opacity: 0.9;">
+                    A: Pythonで<code>python app.py</code>と入力するように、Dockerでも<code>docker ps</code>と入力します。これが「コマンド」です。ターミナルに入力する文字列のことです。
+                    <a href="WHAT_IS_COMMAND.md" style="color: #4CAF50; text-decoration: underline;">詳しくはこちら</a>
+                </p>
+            </div>
+            <div class="info-item">
+                <strong>Q: コンテナは目に見えないの？</strong>
+                <p style="margin-top: 5px; opacity: 0.9;">
+                    A: <strong>見えます！</strong>コンテナ内のファイルシステムは完全に見えます。ファイルの内容も、プロセスも、すべて見えます。
+                    <a href="SEE_CONTAINER.md" style="color: #4CAF50; text-decoration: underline;">実際に確認してみましょう</a>
+                </p>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h2>📚 もっと詳しく知りたい</h2>
+            <div class="info-item">
+                <strong>詳しい説明:</strong>
+                <a href="WHY_THIS_MATTERS.md" style="color: #4CAF50; text-decoration: underline;">WHY_THIS_MATTERS.md</a>を読んでください
+            </div>
+            <div class="info-item">
+                <strong>docker-compose up -dで何が起きているか:</strong>
+                <a href="WHAT_HAPPENS.md" style="color: #4CAF50; text-decoration: underline;">WHAT_HAPPENS.md</a>を読んでください
+            </div>
+            <div class="info-item">
+                <strong>仮想サーバーとコンテナの違い:</strong>
+                <a href="IS_THIS_VIRTUAL_SERVER.md" style="color: #4CAF50; text-decoration: underline;">IS_THIS_VIRTUAL_SERVER.md</a>を読んでください
+            </div>
+            <div class="info-item">
+                <strong>イメージはどこにある？コンテナとの関係:</strong>
+                <a href="WHERE_ARE_IMAGES.md" style="color: #4CAF50; text-decoration: underline;">WHERE_ARE_IMAGES.md</a>を読んでください
+            </div>
+            <div class="info-item">
+                <strong>コンテナは「見える」！実際に確認する方法:</strong>
+                <a href="SEE_CONTAINER.md" style="color: #4CAF50; text-decoration: underline;">SEE_CONTAINER.md</a>を読んでください
+            </div>
+            <div class="info-item">
+                <strong>「コマンド」とは何か？Pythonの例で理解する:</strong>
+                <a href="WHAT_IS_COMMAND.md" style="color: #4CAF50; text-decoration: underline;">WHAT_IS_COMMAND.md</a>を読んでください
+            </div>
+            <div class="info-item">
+                <strong>docker psの見方:</strong>
+                <a href="../../10_docker_psの見方.md" style="color: #4CAF50; text-decoration: underline;">docker psで表示される情報の意味</a>
+            </div>
+            <div class="info-item">
+                <strong>Docker用語解説:</strong>
+                <a href="../../00_Docker用語解説.md" style="color: #4CAF50; text-decoration: underline;">Repository、Image、Container、Volumes</a>を学びましょう
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
