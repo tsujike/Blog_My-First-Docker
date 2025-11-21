@@ -1,0 +1,10 @@
+-- カウンターテーブルの作成
+CREATE TABLE IF NOT EXISTS counter (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    count_value INT NOT NULL DEFAULT 0,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- 初期データの挿入
+INSERT INTO counter (count_value) VALUES (0);
+

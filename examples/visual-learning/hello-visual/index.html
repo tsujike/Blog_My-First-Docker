@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Docker - 視覚的に学ぶ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .info-box h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .info-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        .info-item strong {
+            display: inline-block;
+            min-width: 150px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .status.running {
+            background: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+        
+        .command {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .command code {
+            color: #4CAF50;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        
+        .timestamp {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello Docker! 🐳</h1>
+        <p class="subtitle">Dockerコンテナが動いています！</p>
+        
+        <div class="info-box">
+            <h2>📦 コンテナ情報</h2>
+            <div class="info-item">
+                <strong>状態:</strong>
+                <span class="status running">実行中</span>
+            </div>
+            <div class="info-item">
+                <strong>イメージ:</strong> nginx:alpine
+            </div>
+            <div class="info-item">
+                <strong>ポート:</strong> 8080 → 80
+            </div>
+            <div class="info-item">
+                <strong>ファイルの場所:</strong> ./index.html
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h2>🔍 確認コマンド</h2>
+            <div class="command">
+                <code>docker ps</code> - 実行中のコンテナを確認
+            </div>
+            <div class="command">
+                <code>docker logs hello-visual-web</code> - ログを確認
+            </div>
+            <div class="command">
+                <code>docker exec hello-visual-web ls /usr/share/nginx/html</code> - コンテナ内のファイルを確認
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h2>💡 学習ポイント</h2>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+                <li>このページはDockerコンテナ内で動いています</li>
+                <li>HTMLファイルはホスト（あなたのPC）上にあります</li>
+                <li>ファイルを編集すると、変更が即座に反映されます</li>
+                <li>コンテナを停止すると、このページにアクセスできなくなります</li>
+                <li><strong>環境に依存しない：</strong>Mac、Windows、Linuxで同じように動きます</li>
+                <li><strong>環境ごとアプリを運ぶ：</strong>このコンテナは、どのOSでも同じように動作します</li>
+            </ul>
+        </div>
+        
+        <div class="timestamp">
+            最終更新: <span id="timestamp"></span>
+        </div>
+    </div>
+    
+    <script>
+        // タイムスタンプを更新
+        function updateTimestamp() {
+            const now = new Date();
+            const timestamp = now.toLocaleString('ja-JP', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('timestamp').textContent = timestamp;
+        }
+        
+        // 初回表示
+        updateTimestamp();
+        
+        // 1秒ごとに更新
+        setInterval(updateTimestamp, 1000);
+    </script>
+</body>
+</html>
+
